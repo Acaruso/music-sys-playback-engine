@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "audio_util.h"
+#include "sine_test.h"
 
 AudioService::AudioService(WasapiClient& wasapiClient)
     : wasapiClient(wasapiClient)
@@ -51,21 +52,14 @@ void AudioService::run() {
 
 void AudioService::fillSampleBuffer(size_t numSamplesToWrite) {
     unsigned numChannels = 2;
-    unsigned samp = 0;
+    unsigned numFrames = numSamplesToWrite / numChannels;
 
-    // TODO: get samples here
-    std::vector<float> floatSamps;
+    std::vector<float> floatSamps(numFrames);
+    generateSine(floatSamps.data(), numFrames, 440.0f, sampleCounter);
 
-    for (
-        int ugenOutIdx = 0, sampleBufferIdx = 0;
-        ugenOutIdx < floatSamps.size() && sampleBufferIdx < numSamplesToWrite;
-        ++ugenOutIdx, sampleBufferIdx += numChannels
-    ) {
-        samp = scaleSignal(floatSamps[ugenOutIdx]);
-
-        sampleBuffer.buffer[sampleBufferIdx]     = samp;     // L
-        sampleBuffer.buffer[sampleBufferIdx + 1] = samp;     // R
-
-        sampleCounter++;
+    for (size_t i = 0; i < numFrames; i++) {
+        unsigned samp = scaleSignal(floatSamps[i]);
+        sampleBuffer.buffer[i * numChannels]     = samp;  // L
+        sampleBuffer.buffer[i * numChannels + 1] = samp;  // R
     }
 }
