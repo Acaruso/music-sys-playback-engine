@@ -12,6 +12,8 @@ target_include_directories(music_sys_playback_engine PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
 
+target_compile_definitions(music_sys_playback_engine PRIVATE UNICODE _UNICODE)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET music_sys_playback_engine PROPERTY CXX_STANDARD 20)
 endif()

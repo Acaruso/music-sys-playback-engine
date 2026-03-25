@@ -1,16 +1,14 @@
-﻿#include "music_sys_playback_engine.h"
-#include "util.h"
-#include "wave_reader.h"
+﻿#include "wave_reader.h"
 #include "audio/audio_main.h"
 #include "shared_data/shared_data.h"
 
 #include <thread>
 #include <chrono>
+#include <windows.h>
 
 void loadSamples(SharedData& sharedData);
 
-int main()
-{
+int main() {
 	SharedData sharedData;
 	loadSamples(sharedData);
 
@@ -26,11 +24,11 @@ void loadSamples(SharedData& sharedData) {
     WaveReader waveReader;
 
     waveReader.openWaveFileAndFillFloatVec(
-        L"samples/606HH_01_TapeSat_16_bit.wav",
+        L"samples\\606HH_01_TapeSat_16_bit.wav",
         &sharedData.samples["hihat"]);
 
     waveReader.openWaveFileAndFillFloatVec(
-        L"samples/606SDmod_03_TapeSat_16_bit.wav",
+        L"samples\\606SDmod_03_TapeSat_16_bit.wav",
         &sharedData.samples["snare"]
     );
 }

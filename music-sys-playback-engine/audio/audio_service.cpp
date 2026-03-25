@@ -46,7 +46,8 @@ void AudioService::fillSampleBuffer(size_t numFramesToWrite) {
     unsigned numChannels = 2;
 
     std::vector<float> floatSamps(numFramesToWrite);
-    generateSine(floatSamps.data(), numFramesToWrite, 440.0f);
+    // generateSine(floatSamps.data(), numFramesToWrite, 440.0f);
+    audioApp.fillSampleBuffer(floatSamps);
 
     for (size_t i = 0; i < numFramesToWrite; i++) {
         unsigned samp = scaleSignal(floatSamps[i]);
