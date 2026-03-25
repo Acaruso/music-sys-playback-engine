@@ -1,6 +1,7 @@
 ﻿file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "main/*.cpp" "main/*.h"
     "audio/*.cpp" "audio/*.h"
+    "shared_data/*.cpp" "shared_data/*.h"
 )
 
 add_executable(music_sys_playback_engine ${SOURCES})

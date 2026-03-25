@@ -6,8 +6,8 @@
 #include "audio_util.h"
 #include "sine_test.h"
 
-AudioService::AudioService(WasapiClient& wasapiClient)
-    : wasapiClient(wasapiClient)
+AudioService::AudioService(AudioApp& audioApp, WasapiClient& wasapiClient)
+    : audioApp(audioApp), wasapiClient(wasapiClient)
 {
     bufferSizeBytes = wasapiClient.getBufferSizeBytes();
     sampleBuffer.init(bufferSizeBytes);
