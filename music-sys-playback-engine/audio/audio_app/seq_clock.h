@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "util.h"
 
 // clock has 96 PPQ resolution
@@ -8,6 +10,7 @@
 // because: 96 * 4 = 384
 
 // 384th notes    to        x
+// -----------------------------------
 // 384            to        1 measure
 // 192            to        1/2   note
 // 96             to        1/4   note
@@ -23,7 +26,7 @@ public:
     // length of measure in pulses
     const int measureSize = 384;
 
-    int samplesPerPulse = 10;
+    int samplesPerPulse;
 
     // counters:
     int sampleInPulse = 0;
@@ -33,9 +36,9 @@ public:
     int measureInSong = 0;
     bool measureInSongRollover = false;
 
-    SeqClock(int _samplesPerPulse) {
-        samplesPerPulse = _samplesPerPulse;
-    }
+    SeqClock(int samplesPerPulse)
+        : samplesPerPulse(samplesPerPulse)
+    {}
 
     void reset() {
         sampleInPulse = 0;
@@ -50,7 +53,7 @@ public:
         return (sampleInPulse == 0);
     }
 
-    void run() {
+    void get() {
         sampleInPulseRollover = modInc(sampleInPulse, samplesPerPulse);
         if (sampleInPulseRollover) {
             measureInSongRollover = modInc(pulseInMeasure, measureSize);

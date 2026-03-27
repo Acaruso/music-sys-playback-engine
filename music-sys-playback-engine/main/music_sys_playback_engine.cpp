@@ -25,7 +25,8 @@ void loadSamples(SharedData& sharedData) {
 
     waveReader.openWaveFileAndFillFloatVec(
         L"samples\\606HH_01_TapeSat_16_bit.wav",
-        &sharedData.samples["hihat"]);
+        &sharedData.samples["hihat"]
+    );
 
     waveReader.openWaveFileAndFillFloatVec(
         L"samples\\606SDmod_03_TapeSat_16_bit.wav",
