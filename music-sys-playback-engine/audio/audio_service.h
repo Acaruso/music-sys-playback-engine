@@ -1,14 +1,16 @@
 #pragma once
 
+#include "audio_app.h"
 #include "sample_buffer.h"
 #include "wasapi_client.h"
 
 class AudioService {
 public:
-    AudioService(WasapiClient& wasapiClient);
+    AudioService(AudioApp& audioApp, WasapiClient& wasapiClient);
     void run();
 
 private:
+    AudioApp& audioApp;
     WasapiClient& wasapiClient;
     SampleBuffer sampleBuffer;
 

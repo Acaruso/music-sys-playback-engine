@@ -4,9 +4,10 @@
 #include <vector>
 
 #include "audio_util.h"
+#include "sine_test.h"
 
-AudioService::AudioService(WasapiClient& wasapiClient)
-    : wasapiClient(wasapiClient)
+AudioService::AudioService(AudioApp& audioApp, WasapiClient& wasapiClient)
+    : audioApp(audioApp), wasapiClient(wasapiClient)
 {
     bufferSizeBytes = wasapiClient.getBufferSizeBytes();
     sampleBuffer.init(bufferSizeBytes);
@@ -25,23 +26,15 @@ void AudioService::run() {
 
     unsigned numPaddingFrames = 0;
     unsigned numFramesToWrite = 0;
-    unsigned numSamplesToWrite = 0;
 
     // main loop:
     while (!quit) {
         WaitForSingleObject(wasapiClient.hEvent, INFINITE);
 
         numPaddingFrames = wasapiClient.getCurrentPadding();
-
-        // recall that each elt of buffer stores 1 sample.
-        // a frame is 2 samples -> 1 for each channel.
-        // so numSamplesToWrite = numFramesToWrite * 2.
-
         numFramesToWrite = bufferSizeFrames - numPaddingFrames;
 
-        numSamplesToWrite = numFramesToWrite * 2;
-
-        fillSampleBuffer(numSamplesToWrite);
+        fillSampleBuffer(numFramesToWrite);
 
         wasapiClient.writeBuffer(sampleBuffer.buffer, numFramesToWrite);
     }
@@ -49,23 +42,17 @@ void AudioService::run() {
     wasapiClient.stopPlaying();
 }
 
-void AudioService::fillSampleBuffer(size_t numSamplesToWrite) {
+void AudioService::fillSampleBuffer(size_t numFramesToWrite) {
     unsigned numChannels = 2;
-    unsigned samp = 0;
 
-    // TODO: get samples here
-    std::vector<float> floatSamps;
+    std::vector<float> floatSamps(numFramesToWrite);
+    // generateSine(floatSamps.data(), numFramesToWrite, 440.0f);
+    audioApp.fillSampleBuffer(floatSamps);
 
-    for (
-        int ugenOutIdx = 0, sampleBufferIdx = 0;
-        ugenOutIdx < floatSamps.size() && sampleBufferIdx < numSamplesToWrite;
-        ++ugenOutIdx, sampleBufferIdx += numChannels
-    ) {
-        samp = scaleSignal(floatSamps[ugenOutIdx]);
-
-        sampleBuffer.buffer[sampleBufferIdx]     = samp;     // L
-        sampleBuffer.buffer[sampleBufferIdx + 1] = samp;     // R
-
-        sampleCounter++;
+    for (size_t i = 0; i < numFramesToWrite; i++) {
+        unsigned samp = scaleSignal(floatSamps[i]);
+        sampleBuffer.buffer[i * numChannels]     = samp;  // L
+        sampleBuffer.buffer[i * numChannels + 1] = samp;  // R
+        ++sampleCounter;
     }
 }
