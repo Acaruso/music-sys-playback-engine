@@ -106,6 +106,8 @@ void WasapiClient::init() {
     initEvent();
     initTask();
     cacheBufferSizes();
+    std::cout << "Sample rate: " << waveFormat.Format.nSamplesPerSec << std::endl;
+    std::cout << "Bit depth: " << waveFormat.Samples.wValidBitsPerSample << std::endl;
 }
 
 void WasapiClient::destroy() {
