@@ -49,3 +49,15 @@ template <typename T>
 bool inBounds(std::vector<T>& vec, unsigned i) {
     return i > 0 && i < vec.size();
 }
+
+// idx = (idx + 1) % mod
+// return `true` if the counter "rolled over" to 0
+inline bool modInc(int& idx, int mod) {
+    if ((idx + 1) < mod) {
+        idx = idx + 1;
+        return false;
+    } else {
+        idx = 0;
+        return true;
+    }
+}

@@ -8,7 +8,10 @@ add_executable(music_sys_playback_engine ${SOURCES})
 
 target_include_directories(music_sys_playback_engine PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/audio/audio_system
+    ${CMAKE_CURRENT_SOURCE_DIR}/audio/audio_app
     ${CMAKE_CURRENT_SOURCE_DIR}/main
+    ${CMAKE_CURRENT_SOURCE_DIR}/shared_data
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
 

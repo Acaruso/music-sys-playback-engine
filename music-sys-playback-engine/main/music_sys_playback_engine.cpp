@@ -1,5 +1,5 @@
 ﻿#include "wave_reader.h"
-#include "audio/audio_main.h"
+#include "audio_main.h"
 #include "shared_data/shared_data.h"
 
 #include <thread>
@@ -25,7 +25,8 @@ void loadSamples(SharedData& sharedData) {
 
     waveReader.openWaveFileAndFillFloatVec(
         L"samples\\606HH_01_TapeSat_16_bit.wav",
-        &sharedData.samples["hihat"]);
+        &sharedData.samples["hihat"]
+    );
 
     waveReader.openWaveFileAndFillFloatVec(
         L"samples\\606SDmod_03_TapeSat_16_bit.wav",
