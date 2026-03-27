@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include "util.h"
 
 // clock has 96 PPQ resolution

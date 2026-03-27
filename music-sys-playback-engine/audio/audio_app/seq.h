@@ -5,7 +5,7 @@
 
 #include "seq_clock.h"
 #include "shared_data.h"
-#include "wave_player.h"
+#include "sample_player.h"
 
 struct SeqEvent {
     int pos;
@@ -15,7 +15,7 @@ struct SeqEvent {
 class Seq {
     SeqClock& seqClock;
     SharedData& sharedData;
-    WavePlayer snare;
+    SamplePlayer snare;
 
 public:
     int eventsSize = 0;
@@ -41,7 +41,6 @@ public:
         : seqClock(seqClock),
         sharedData(sharedData),
         snare(sharedData.samples["snare"])
-
     {
         set16NotePattern(pattern);
     }
@@ -66,10 +65,7 @@ public:
         addEvent(pos * 6, value);
     }
 
-    static bool SeqEventCompare(
-        const SeqEvent& a,
-        const SeqEvent& b
-    ) {
+    static bool SeqEventCompare(const SeqEvent& a, const SeqEvent& b) {
         return a.pos > b.pos;
     }
 

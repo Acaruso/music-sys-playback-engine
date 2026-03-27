@@ -1,9 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 
-class WavePlayer {
+class SamplePlayer {
     std::vector<float>& wave;
     float curSamp;
     int idx;
@@ -14,16 +13,13 @@ class WavePlayer {
     int direction;
 
 public:
-    WavePlayer(std::vector<float>& wave)
+    SamplePlayer(std::vector<float>& wave)
         : wave(wave),
         curSamp(0.0f),
         idx(0),
         playing(false),
         direction(DIRECTION_FORWARD)
-    {
-        std::cout << "WavePlayer "
-            << "wave.size()=" << wave.size() << std::endl;
-    }
+    {}
 
     void trigger() {
         idx = 0;
