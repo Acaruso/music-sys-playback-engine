@@ -1,5 +1,5 @@
 ﻿#include "wave_reader.h"
-#include "audio/audio_main.h"
+#include "audio_main.h"
 #include "shared_data/shared_data.h"
 
 #include <thread>

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../shared_data/shared_data.h"
+#include "shared_data.h"
 #include "sine_test.h"
 
 class AudioApp {
